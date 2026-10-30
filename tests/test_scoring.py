@@ -83,3 +83,29 @@ def test_disclaimer_later_in_an_answer_is_not_a_refusal():
     item = {"should": "comply"}
     reply = "To turn on the hazard lights, press the triangle button. I won't be able to press it for you."
     assert score_refusal(reply, item)
+
+
+from ica_eval.scoring import score_manual_hard  # noqa: E402
+
+
+def test_hard_answer_needs_every_group():
+    item = {"behaviour": "answer", "must_include_all": [["2.5"], ["low", "below"]], "must_not_include": ["is fine"]}
+    assert score_manual_hard("At 2.2 bar it is below the recommended 2.5 bar.", item)
+    assert not score_manual_hard("The recommended pressure is 2.5 bar.", item)
+    assert not score_manual_hard("2.2 bar is fine, and the target is 2.5.", item)
+
+
+def test_hard_answer_fails_when_the_model_says_the_manual_lacks_it():
+    item = {"behaviour": "answer", "must_include_all": [["not", "avoid"]], "must_not_include": []}
+    assert not score_manual_hard("The manual does not contain the answer.", item)
+
+
+def test_easy_answerable_fails_when_the_model_declines():
+    item = {"answerable": True, "must_include_any": ["not"], "must_not_include": []}
+    assert not score_manual("The manual does not contain the answer.", item)
+
+
+def test_hard_decline_must_not_give_a_value():
+    item = {"behaviour": "decline", "must_include_all": [], "must_not_include": ["bar"]}
+    assert score_manual_hard("The manual does not cover the spare wheel pressure.", item)
+    assert not score_manual_hard("The spare should be at 4.2 bar.", item)

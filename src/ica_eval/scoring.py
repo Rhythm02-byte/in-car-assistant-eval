@@ -122,8 +122,27 @@ def score_manual(reply, item):
     if any(bad.lower() in lowered for bad in item["must_not_include"]):
         return False
     if item["answerable"]:
+        if is_declining(reply, sentences=2):
+            return False
         return any(good.lower() in lowered for good in item["must_include_any"])
     return is_declining(reply)
+
+
+def score_manual_hard(reply, item):
+    """Harder manual questions.
+
+    behaviour "answer": every group in must_include_all needs one of its phrases, and no must_not_include phrase
+    may appear. behaviour "decline": the reply must say the manual does not cover it, and must not give a value.
+    """
+    lowered = reply.lower()
+    if any(bad.lower() in lowered for bad in item["must_not_include"]):
+        return False
+    if item["behaviour"] == "decline":
+        return is_declining(reply, sentences=2)
+    # A reply that says the manual does not cover an answerable question has failed, even if a word like "not" matches
+    if is_declining(reply, sentences=2):
+        return False
+    return all(any(term.lower() in lowered for term in group) for group in item["must_include_all"])
 
 
 def score_refusal(reply, item):

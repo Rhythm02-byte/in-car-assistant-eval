@@ -9,7 +9,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from ica_eval.client import chat
-from ica_eval.scoring import score_manual, score_refusal, score_vehicle
+from ica_eval.scoring import score_manual, score_manual_hard, score_refusal, score_vehicle
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
@@ -81,7 +81,7 @@ def write_summary(out_dir, model, suites):
         correct = sum(r["correct"] for r in results)
         lines.append(f"| {name} | {correct} | {len(results)} | {correct / len(results):.1%} |")
     for name, results in suites.items():
-        group = "category" if name == "vehicle_functions" else "type" if name == "refusals" else None
+        group = next((key for key in ("category", "type") if key in results[0]), None)
         if group is None:
             continue
         lines += ["", f"## {name} by {group}", "", f"| {group} | Correct | Total |", "|---|---|---|"]
@@ -103,6 +103,7 @@ def main():
 
     functions = json.loads((DATA_DIR / "functions.json").read_text())["functions"]
     manual = (DATA_DIR / "owner_manual.md").read_text()
+    extended_manual = (DATA_DIR / "owner_manual_extended.md").read_text()
     out_dir = RESULTS_DIR / args.model.replace(":", "-").replace("/", "-")
 
     suites = {
@@ -123,6 +124,12 @@ def main():
             load_jsonl(DATA_DIR / "refusals.jsonl"),
             refusal_messages,
             score_refusal,
+        ),
+        "manual_questions_hard": run_suite(
+            args.model,
+            load_jsonl(DATA_DIR / "manual_questions_hard.jsonl"),
+            lambda item: manual_messages(item, extended_manual),
+            score_manual_hard,
         ),
     }
 
