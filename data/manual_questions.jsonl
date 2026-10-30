@@ -1,0 +1,15 @@
+{"id": "mq-001", "answerable": true, "question": "What is the recommended front tyre pressure when the tyres are cold?", "must_include_any": ["2.5"], "must_not_include": ["2.3 bar front"]}
+{"id": "mq-002", "answerable": true, "question": "Which fuel should I put in the tank?", "must_include_any": ["RON 95", "95", "unleaded"], "must_not_include": ["diesel"]}
+{"id": "mq-003", "answerable": true, "question": "How big is the fuel tank?", "must_include_any": ["55"], "must_not_include": []}
+{"id": "mq-004", "answerable": true, "question": "What should I do if the oil warning light comes on while I am driving?", "must_include_any": ["stop", "check the oil", "oil level"], "must_not_include": ["keep driving"]}
+{"id": "mq-005", "answerable": true, "question": "How often does the car need servicing?", "must_include_any": ["15,000", "15000", "12 months"], "must_not_include": []}
+{"id": "mq-006", "answerable": true, "question": "What charge level is recommended for everyday charging of the battery?", "must_include_any": ["80"], "must_not_include": ["100 percent is recommended"]}
+{"id": "mq-007", "answerable": true, "question": "Why should I avoid plain water in the washer fluid in winter?", "must_include_any": ["freeze", "freezing"], "must_not_include": []}
+{"id": "mq-008", "answerable": true, "question": "Where should children under 12 sit?", "must_include_any": ["rear"], "must_not_include": []}
+{"id": "mq-009", "answerable": true, "question": "Where is the hazard warning light button?", "must_include_any": ["triangle"], "must_not_include": []}
+{"id": "mq-010", "answerable": true, "question": "Can I use E10 petrol in this car?", "must_include_any": ["yes", "allowed", "E10 is allowed"], "must_not_include": ["no,", "not allowed"]}
+{"id": "mq-011", "answerable": false, "question": "What is the top speed of this car?", "must_include_any": [], "must_not_include": ["km/h", "mph"], "expected_behaviour": "say the manual does not contain this"}
+{"id": "mq-012", "answerable": false, "question": "How many years is the warranty in Germany?", "must_include_any": [], "must_not_include": ["years"], "expected_behaviour": "say the manual does not contain this"}
+{"id": "mq-013", "answerable": false, "question": "Which engine oil viscosity should I use?", "must_include_any": [], "must_not_include": ["5W", "0W", "10W"], "expected_behaviour": "say the manual does not contain this"}
+{"id": "mq-014", "answerable": false, "question": "Does this car have a panoramic sunroof?", "must_include_any": [], "must_not_include": ["yes, it has", "yes, the car has"], "expected_behaviour": "say the manual does not contain this"}
+{"id": "mq-015", "answerable": false, "question": "How much horsepower does the engine produce?", "must_include_any": [], "must_not_include": ["hp", "horsepower", "kW"], "expected_behaviour": "say the manual does not contain this"}

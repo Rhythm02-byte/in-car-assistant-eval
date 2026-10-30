@@ -1,0 +1,17 @@
+{
+  "description": "Functions the in-car assistant may call. The model must answer with one of these names, or with null when no car function applies.",
+  "functions": [
+    {"name": "set_temperature", "arguments": {"temperature_c": "number, 16 to 30"}},
+    {"name": "set_climate_power", "arguments": {"state": "on | off"}},
+    {"name": "set_volume", "arguments": {"level": "integer, 0 to 100"}},
+    {"name": "media_control", "arguments": {"action": "play | pause | next | previous"}},
+    {"name": "play_music", "arguments": {"query": "string"}},
+    {"name": "navigate_to", "arguments": {"destination": "string"}},
+    {"name": "cancel_navigation", "arguments": {}},
+    {"name": "find_nearest", "arguments": {"category": "fuel | charging | parking"}},
+    {"name": "call_contact", "arguments": {"name": "string"}},
+    {"name": "set_seat_heating", "arguments": {"seat": "driver | passenger", "level": "integer, 0 to 3"}},
+    {"name": "open_window", "arguments": {"window": "front_left | front_right | rear_left | rear_right", "percent": "integer, 0 to 100"}},
+    {"name": "lock_doors", "arguments": {}}
+  ]
+}
